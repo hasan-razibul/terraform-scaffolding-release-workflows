@@ -8,5 +8,5 @@ jobs:
     - uses: dsaltares/fetch-gh-release-asset@master
       with:
         version: 'latest'
-        file: "scaffolding_*\\.zip"
+        file: "scaffolding_0.2.1_darwin_amd64.zip"
         token: ${{ secrets.GITHUB_TOKEN }}
