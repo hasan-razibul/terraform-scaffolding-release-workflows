@@ -1,6 +1,8 @@
 name: Get Version
 
-on: workflow_dispatch
+on:
+  push:
+    branches: [ main ]
 
 env:
   GITHUB_TOKEN: ${{ github.token }}
