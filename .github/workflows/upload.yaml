@@ -9,4 +9,4 @@ jobs:
       with:
         version: 'latest'
         file: "*\\.zip"
-        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
