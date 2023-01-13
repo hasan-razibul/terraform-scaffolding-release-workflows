@@ -1,4 +1,5 @@
-- name: Update my-file.json description
+name: Build and Release
+
 on: workflow_dispatch
 
 env:
