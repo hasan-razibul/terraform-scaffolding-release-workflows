@@ -5,11 +5,10 @@ jobs:
   asset_fetcher:
     runs-on: ubuntu-latest
     steps:
-    - run: 
     - uses: robinraju/release-downloader@v1.7
       with:
         latest: true
         fileName: "*"
     - run: |
-      ls ${{ github.workspace }}
+        ls ${{ github.workspace }}
         
