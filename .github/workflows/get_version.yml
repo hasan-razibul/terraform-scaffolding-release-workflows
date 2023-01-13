@@ -1,21 +1,14 @@
 name: Get Version
-on:
-  release:
-    types:
-      - edited
-      - released
-
+on: workflow_dispatch
 jobs:
-  Release:
-
+  get-release:
+    name: Get the release branch version number
     runs-on: ubuntu-latest
 
     steps:
     - id: get_version
-      name: Get version
-      uses: jannemattila/get-version-from-tag@v1
+      uses: battila7/get-version-action@v2
 
-    - name: Display version
-      run: |
-        VERSION=$(echo "${{ steps.get_version.outputs.version }}")
-        echo $VERSION
+    - run: echo ${{ steps.get_version.outputs.version }}
+
+  
