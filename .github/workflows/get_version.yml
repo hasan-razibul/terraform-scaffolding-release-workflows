@@ -6,8 +6,7 @@ env:
   GITHUB_TOKEN: ${{ github.token }}
   
 jobs:
-  build:
-    name: get release version
+  get-version:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
