@@ -1,5 +1,8 @@
 name: Update payload.json file
-on: workflow_dispatch
+on:
+  push:
+    branches:
+      - main
 
 env:
   GITHUB_TOKEN: ${{ github.token }}
