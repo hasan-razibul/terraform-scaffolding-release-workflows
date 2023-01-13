@@ -4,10 +4,10 @@ on: workflow_dispatch
 
 env:
   GITHUB_TOKEN: ${{ github.token }}
-  
+
 jobs:
   build:
-    name: Get version
+    name: checkout code
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
@@ -17,8 +17,8 @@ jobs:
       id: semantic_release_info
       uses: jossef/action-semantic-release-info@v1
       env:
-        GITHUB_TOKEN: ${{ github.token }}
-        
+        GITHUB_TOKEN: ${{ github.token }
+
     - name: Update payload.json version
       uses: jossef/action-set-json-field@v2.1
       with:
@@ -32,3 +32,6 @@ jobs:
         git config --local user.name "GitHub Action"
         git add -A
         git commit -m "docs(): bumping release ${{ steps.semantic_release_info.outputs.git_tag }}"
+        git tag ${{ steps.semantic_release_info.outputs.git_tag }}
+        
+
