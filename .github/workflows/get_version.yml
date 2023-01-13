@@ -2,7 +2,7 @@ name: Get Version
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 env:
   GITHUB_TOKEN: ${{ github.token }}
