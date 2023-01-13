@@ -1,0 +1,14 @@
+name: Update Payload
+on: workflow_dispatch
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Update my-file.json description
+        uses: jossef/action-set-json-field@v2.1
+        with:
+          file: payload.json
+          field: version
+          value: 2.0.0
+
+  
