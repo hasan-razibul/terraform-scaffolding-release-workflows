@@ -4,11 +4,11 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - name: Update my-file.json description
-        uses: jossef/action-set-json-field@v2.1
+      - name: Update payload.json version
+      - uses: chromee/dot-json-edit-action@v1
         with:
-          file: .github/workflows/payload.json
-          field: .data.attributes.version
-          value: 2.0.0
+          json_path: "payload.json"
+          field_path: "data/attributes/version"
+          field_value: "5.0.0"
 
   
