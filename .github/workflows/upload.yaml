@@ -5,8 +5,7 @@ jobs:
   asset_fetcher:
     runs-on: ubuntu-latest
     steps:
-    - uses: wyozi/download-gh-release-asset@master
+    - uses: dsaltares/fetch-gh-release-asset@master
       with:
-        args: release_asset.dat
-      env:
-        GITHUB_TOKEN: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+        file: "*\\.zip"
+        token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
