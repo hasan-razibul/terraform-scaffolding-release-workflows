@@ -10,7 +10,7 @@ jobs:
       - name: Update payload.json version
         uses: chromee/dot-json-edit-action@v1
         with:
-          json_path: "payload.json"
+          json_path: ".github/workflows/payload.json"
           field_path: "data/attributes/version"
           field_value: "5.0.0"
 
