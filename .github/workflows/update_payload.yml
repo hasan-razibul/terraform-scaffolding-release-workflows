@@ -18,6 +18,12 @@ jobs:
       uses: jossef/action-semantic-release-info@v1
       env:
         GITHUB_TOKEN: ${{ github.token }
+        
+        
+    - name: Build
+      run: |
+        npm ci --only=prod
+        npm run build
 
     - name: Update payload.json version
       uses: jossef/action-set-json-field@v2.1
