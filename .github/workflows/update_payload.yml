@@ -4,6 +4,7 @@ on: workflow_dispatch
 
 env:
   GITHUB_TOKEN: ${{ github.token }}
+  
 jobs:
   build:
     name: Get version
@@ -18,7 +19,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
         
-    - name: Update package.json version
+    - name: Update payload.json version
       uses: jossef/action-set-json-field@v2.1
       with:
         file: payload.json
