@@ -1,6 +1,9 @@
 name: Get Version
-
-on: push
+on:
+  release:
+    types:
+      - edited
+      - released
 
 jobs:
   Release:
