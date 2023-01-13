@@ -5,8 +5,8 @@ jobs:
   asset_fetcher:
     runs-on: ubuntu-latest
     steps:
-    - uses: dsaltares/fetch-gh-release-asset@master
+    - uses: robinraju/release-downloader@v1.7
       with:
-        version: 'latest'
-        file: "*.zip"
-        token: ${{ secrets.GITHUB_TOKEN }}
+        latest: true
+        fileName: "*"
+        
