@@ -1,0 +1,20 @@
+name: Get Version
+
+on: workflow_dispatch
+
+env:
+  GITHUB_TOKEN: ${{ github.token }}
+
+jobs:
+  build:
+    name: get version
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+    - uses: actions/checkout@v3
+ 
+    - name: Gets semantic release info
+      id: semantic_release_info
+      uses: jossef/action-semantic-release-info@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
