@@ -13,5 +13,7 @@ jobs:
           json_path: ".github/workflows/payload.json"
           field_path: "data/attributes/version"
           field_value: "5.0.0"
+      - name: after edit
+        run: cat .github/workflows/payload.json
 
   
