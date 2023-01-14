@@ -17,10 +17,9 @@ jobs:
         type: "stable"
     - name: echo release number   
       id : set-output
-      run : echo "version= "${{ steps.nyx.outputs.release }}" | awk 'sub(/^.{1}/,"")'" >> $GITHUB_OUTPUT
+      run : echo "${{ steps.nyx.outputs.release }}" | awk 'sub(/^.{1}/,"")'
       
-    - name: show new output
-      run : echo "${{ steps.set-output.outputs.version }}"
+
     
       
         
