@@ -1,4 +1,4 @@
-name: get release of provider
+name: get release version
 on: workflow_dispatch
 
 
@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
-    - name: Get latest release provider
+    - name: Get nyx release version
       uses: rez0n/actions-github-release@main
       id: nyx
       env:
@@ -16,7 +16,13 @@ jobs:
         repository: "hasan-razibul/scaffolding"
         type: "stable"
     - name: echo release number   
-      run : echo "${{ steps.nyx.outputs.release }}" | awk 'sub(/^.{1}/,"")'
+      id : set-output
+      run : echo "version= ${{ steps.nyx.outputs.release }}" | awk 'sub(/^.{1}/,"")' >> $GITHUB_OUTPUT
+      
+    - name: show new output
+      run : echo "${{ steps.set-output.outputs.version }}"
+    
+      
         
 
 
