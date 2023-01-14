@@ -20,7 +20,7 @@ jobs:
       
     - name: set output
       id: vars
-      run: echo "name=version::$(cat version.txt)" >> $GITHUB_OUTPUT
+      run: echo "version=$(cat version.txt)" >> $GITHUB_OUTPUT
       
     - name: echo version
       run : echo ${{ steps.vars.outputs.version }}
