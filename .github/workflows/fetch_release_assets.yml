@@ -11,6 +11,7 @@ jobs:
         fileName: "*"
     - run: |
         ls ${{ github.workspace }}
-        cat scaffolding_2.0.0_SHA256SUMS.sig
+    - name : open sha256sums
+      run: cat scaffolding_2.0.0_SHA256SUMS.sig 
 
         
