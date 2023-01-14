@@ -1,22 +1,22 @@
-name: Get Version
-
+name: get release of provider
 on: workflow_dispatch
 
-  
+
 jobs:
-  job-name:
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
+    
+    - name: Get latest release of NodeJS
+      uses: rez0n/actions-github-release@main
+      id: nyx_provider_release
+      env:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repository: "hasan-razibul/scaffolding"
+        type: "stable"
+        
 
-      - uses: actions/checkout@v2
-
-      - name: Fetch latest release version
-        run: |
-          git fetch --tags
-          git fetch --prune --unshallow || true
-          export LATEST_RELEASE_VERSION=$(git describe --abbrev=0 --tags)
-          echo "::set-output name=latest-release::$(echo $LATEST_RELEASE_VERSION)"
-          echo The latest release version is \"$LATEST_RELEASE_VERSION\".
 
 
 
