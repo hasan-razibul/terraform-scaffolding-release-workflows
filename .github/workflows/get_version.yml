@@ -7,10 +7,13 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions-ecosystem/action-release-label@v1
+      - name: checkout code
+        uses: actions/checkout@v2
+        
+      - name: get release version
+        uses: actions-ecosystem/action-release-label@v1
         id: release-label
-        if: ${{ github.event.pull_request.merged == true }}
+ 
 
 
 
