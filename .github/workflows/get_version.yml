@@ -2,8 +2,6 @@ name: Get Version
 
 on: workflow_dispatch
 
-env:
-  GITHUB_TOKEN: ${{ github.token }}
   
 jobs:
   build:
