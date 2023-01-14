@@ -15,6 +15,7 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         repository: "hasan-razibul/scaffolding"
         type: "stable"
+        run : echo release
         
 
 
