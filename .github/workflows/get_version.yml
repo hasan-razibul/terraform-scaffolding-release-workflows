@@ -10,13 +10,13 @@ jobs:
     
     - name: Get latest release provider
       uses: rez0n/actions-github-release@main
-      id: nyx_provider_release
+      id: nyx_provider_version
       env:
         token: ${{ secrets.GITHUB_TOKEN }}
         repository: "hasan-razibul/scaffolding"
         type: "stable"
     - name: echo release number   
-      run : echo "release"
+      run : cat "release"
         
 
 
