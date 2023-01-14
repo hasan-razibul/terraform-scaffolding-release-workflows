@@ -17,7 +17,10 @@ jobs:
         type: "stable"
     - name: echo release number   
       id : set-output
-      run : echo "${{ steps.nyx.outputs.release }}" | awk 'sub(/^.{1}/,"")'
+      run : echo "${{ steps.nyx.outputs.release }}" | awk 'sub(/^.{1}/,"")' > verison.txt
+      
+    - name: echo version
+      run: cat version.txt
       
 
     
