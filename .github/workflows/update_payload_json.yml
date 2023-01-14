@@ -4,7 +4,7 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - name: Get latest release provider
+      - name: Get nyx release version
         uses: rez0n/actions-github-release@main
         id: nyx
         env:
@@ -12,7 +12,18 @@ jobs:
           repository: "hasan-razibul/scaffolding"
           type: "stable"
       - name: echo release number   
-        run : echo "${{ steps.nyx.outputs.release }}"
+        run : echo "${{ steps.nyx.outputs.release }}" | awk 'sub(/^.{1}/,"")' > version.txt
+
+      - name: set output
+        id: vars
+        run: echo "version=$(cat version.txt)" >> $GITHUB_OUTPUT
+
+      - name: echo version
+        run : echo ${{ steps.vars.outputs.version }}
+        
+        
+        
+        
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -23,7 +34,7 @@ jobs:
         with:
           json_path: ".github/workflows/payload.json"
           field_path: "data/attributes/version"
-          field_value: "${{ steps.nyx.outputs.release }}"
+          field_value: "${{ steps.vars.outputs.version }}"
       - name: after edit
         run: cat .github/workflows/payload.json
         
