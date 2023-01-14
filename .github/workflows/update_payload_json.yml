@@ -4,6 +4,15 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
+      - name: Get latest release provider
+        uses: rez0n/actions-github-release@main
+        id: nyx
+        env:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: "hasan-razibul/scaffolding"
+          type: "stable"
+      - name: echo release number   
+        run : echo "${{ steps.nyx.outputs.release }}"
       - name: Checkout
         uses: actions/checkout@v3
         with:
@@ -14,7 +23,7 @@ jobs:
         with:
           json_path: ".github/workflows/payload.json"
           field_path: "data/attributes/version"
-          field_value: "5.0.1"
+          field_value: "${{ steps.nyx.outputs.release }}"
       - name: after edit
         run: cat .github/workflows/payload.json
         
