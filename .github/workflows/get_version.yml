@@ -16,7 +16,7 @@ jobs:
         repository: "hasan-razibul/scaffolding"
         type: "stable"
     - name: echo release number   
-      run : cat "release"
+      run : echo "${{steps.nyx_provider_versoin.release}}"
         
 
 
