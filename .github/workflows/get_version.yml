@@ -8,14 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
-    - name: Get latest release of NodeJS
+    - name: Get latest release provider
       uses: rez0n/actions-github-release@main
       id: nyx_provider_release
       env:
         token: ${{ secrets.GITHUB_TOKEN }}
         repository: "hasan-razibul/scaffolding"
         type: "stable"
-        run : echo release
+    - name: echo release number   
+      run : echo "release"
         
 
 
