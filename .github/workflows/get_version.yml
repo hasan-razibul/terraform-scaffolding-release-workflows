@@ -4,15 +4,18 @@ on: workflow_dispatch
 
   
 jobs:
-  release:
+  job-name:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout code
-        uses: actions/checkout@v2
-        
-      - name: get release version
-        uses: actions-ecosystem/action-release-label@v1
-        id: release-label
+
+      - uses: actions/checkout@v2
+
+      - name: Fetch latest release version
+        id: fetch-latest-release
+        uses: reloc8/action-latest-release-version@1.0.0
+
+      - name: Test
+        run: echo ${{ steps.fetch-latest-release.outputs.latest-release }}
  
 
 
