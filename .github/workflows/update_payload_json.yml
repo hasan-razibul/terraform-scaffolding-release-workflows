@@ -14,7 +14,7 @@ jobs:
         with:
           json_path: ".github/workflows/payload.json"
           field_path: "data/attributes/version"
-          field_value: "${{ github.event.release.tag_name }}"
+          field_value: ${{ github.event.release.tag_name }}
       - name: after edit
         run: cat .github/workflows/payload.json
         
