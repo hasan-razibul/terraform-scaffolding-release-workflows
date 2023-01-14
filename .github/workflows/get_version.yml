@@ -1,19 +1,17 @@
 name: Get Version
 
-on:
-  push:
-    branches:
-      - 'main'
+on: workflow_dispatch
 
   
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-            
-      - name: Gets semantic release info
-        id: semantic_release_info
-        uses: jossef/action-semantic-release-info@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+      - uses: actions-ecosystem/action-get-latest-tag@v1
+        id: get-latest-tag
+        if: ${{ steps.release-label.outputs.level != null }}
+
+
+
