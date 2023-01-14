@@ -6,9 +6,11 @@ env:
   GITHUB_TOKEN: ${{ github.token }}
   
 jobs:
-  get-version:
+  build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+            
       - name: Gets semantic release info
         id: semantic_release_info
         uses: jossef/action-semantic-release-info@v1
