@@ -11,11 +11,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Curl-1
         run: |
+          cat payload.json
           curl \
-          --header "Authorization:Bearer ${{ secrets.TOKEN }}" \
-          --header "Content-Type:application/vnd.api+json" \
-          --request POST \
-          --data @payload.json \
-          https://app.terraform.io/api/v2/organizations/Test-nyx/registry-providers/private/Test-nyx/nyxx/versions
+            --header "Authorization:Bearer ${{ secrets.TOKEN }}" \
+            --header "Content-Type:application/vnd.api+json" \
+            --request POST \
+            --data @payload.json \
+            https://app.terraform.io/api/v2/organizations/Test-nyx/registry-providers/private/Test-nyx/nyxx/versions
 
 
