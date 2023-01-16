@@ -45,7 +45,7 @@ jobs:
             --header "Authorization:Bearer ${{ secrets.TOKEN }}" \
             --header "Content-Type:application/vnd.api+json" \
             --request POST \
-            --data @ {
+            --data '{
                       "data": {
                         "type": "registry-provider-versions",
                         "attributes": {
@@ -56,7 +56,7 @@ jobs:
                           ]
                         }
                       }
-                    }
+                    }' \
             https://app.terraform.io/api/v2/organizations/Test-nyx/registry-providers/private/Test-nyx/nyxx/versions
 
  
