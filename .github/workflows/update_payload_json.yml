@@ -41,6 +41,26 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: json version update
+          
+      - name: Curl-1
+        run: |
+          curl \
+            --header "Authorization:Bearer ${{ secrets.TOKEN }}" \
+            --header "Content-Type:application/vnd.api+json" \
+            --request POST \
+            --data @ {
+                      "data": {
+                        "type": "registry-provider-versions",
+                        "attributes": {
+                          "version": "${{ steps.vars.outputs.version }}",
+                          "key-id": "${{ secrets.KEY_ID }}",
+                          "protocols": [
+                            "5.0"
+                          ]
+                        }
+                      }
+                    }
+            https://app.terraform.io/api/v2/organizations/Test-nyx/registry-providers/private/Test-nyx/nyxx/versions
 
  
  
