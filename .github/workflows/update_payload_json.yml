@@ -38,9 +38,6 @@ jobs:
       - name: after edit
         run: cat .github/workflows/payload.json
         
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: json version update
           
       - name: Curl-1
         run: |
