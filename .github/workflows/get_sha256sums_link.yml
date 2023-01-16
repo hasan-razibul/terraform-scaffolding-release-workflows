@@ -1,7 +1,7 @@
-name: Update Payload
+name: sha256sums upload link
 on: workflow_dispatch
 jobs:
-  update:
+  get:
     runs-on: ubuntu-latest
     steps:
       - name: Get nyx release version
@@ -57,7 +57,7 @@ jobs:
                         }
                       }
                     }' \
-            https://app.terraform.io/api/v2/organizations/Test-nyx/registry-providers/private/Test-nyx/nyxx/versions
+            https://app.terraform.io/api/v2/organizations/Test-nyx/registry-providers/private/Test-nyx/nyxx/versions > sha256sums.txt
 
  
  
