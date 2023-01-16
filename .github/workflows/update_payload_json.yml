@@ -42,10 +42,10 @@ jobs:
       - name: Curl-1
         run: |
           curl \
-            --header "Authorization:Bearer ${{ secrets.TOKEN }}" \
-            --header "Content-Type:application/vnd.api+json" \
+            --header "Authorization: Bearer ${{ secrets.TOKEN }}" \
+            --header "Content-Type: application/vnd.api+json" \
             --request POST \
-            --data '{
+            --data @'{
                       "data": {
                         "type": "registry-provider-versions",
                         "attributes": {
