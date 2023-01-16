@@ -3,15 +3,18 @@ on : workflow_dispatch
 
 jobs:
   get:
-    name: sha256sums uoload link
     runs-on: ubuntu-latest
     steps:
-    - name: Curl-1
-      run: curl \
-        --header "Authorization: Bearer $TOKEN" \
-        --header "Content-Type: application/vnd.api+json" \
-        --request POST \
-        --data @payload.json \
-        https://app.terraform.io/api/v2/organizations/the-exploration-company/registry-providers/private/the-exploration-company/nyx/versions
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+      - name: Curl-1
+        run: curl \
+          --header "Authorization:Bearer $TOKEN" \
+          --header "Content-Type:application/vnd.api+json" \
+          --request POST \
+          --data @payload.json \
+          https://app.terraform.io/api/v2/organizations/the-exploration-company/registry-providers/private/the-exploration-company/nyx/versions
 
 
