@@ -1,0 +1,10 @@
+{
+  "data": {
+    "type": "registry-provider-versions",
+    "attributes": {
+      "version": "version",
+      "key-id": "${{ secrest.KEY_ID }}",
+      "protocols": ["5.0"]
+    }
+  }
+}
