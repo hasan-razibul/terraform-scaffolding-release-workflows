@@ -8,10 +8,10 @@ jobs:
     steps:
     - name: Curl-1
       run: curl \
-  --header "Authorization: Bearer $TOKEN" \
-  --header "Content-Type: application/vnd.api+json" \
-  --request POST \
-  --data @payload.json \
-  https://app.terraform.io/api/v2/organizations/the-exploration-company/registry-providers/private/the-exploration-company/nyx/versions
+          --header "Authorization: Bearer $TOKEN" \
+          --header "Content-Type: application/vnd.api+json" \
+          --request POST \
+          --data @payload.json \
+          https://app.terraform.io/api/v2/organizations/the-exploration-company/registry-providers/private/the-exploration-company/nyx/versions
 
   
