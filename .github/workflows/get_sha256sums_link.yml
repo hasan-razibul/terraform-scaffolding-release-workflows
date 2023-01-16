@@ -58,6 +58,8 @@ jobs:
                       }
                     }' \
             https://app.terraform.io/api/v2/organizations/Test-nyx/registry-providers/private/Test-nyx/nyxx/versions > sha256sums.txt
+      - name: show sha256sums txt  
+        run: cat sha256sums.txt
 
  
  
