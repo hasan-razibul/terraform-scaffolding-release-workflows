@@ -8,13 +8,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Curl-1
-        run: curl \
-          --header "Authorization:Bearer $TOKEN" \
+        run: |
+          curl \
+          --header "Authorization:Bearer ${{ secrets.TOKEN }}" \
           --header "Content-Type:application/vnd.api+json" \
           --request POST \
           --data @payload.json \
-          https://app.terraform.io/api/v2/organizations/the-exploration-company/registry-providers/private/the-exploration-company/nyx/versions
+          https://app.terraform.io/api/v2/organizations/Test-nyx/registry-providers/private/Test-nyx/nyxx/versions
 
 
