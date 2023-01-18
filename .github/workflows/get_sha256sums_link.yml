@@ -83,7 +83,7 @@ jobs:
       - name: upload sha256sums files
         run : |
           curl -T scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS --url "$(cat shasums-upload.txt)"
-          curl -T scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS.sig --url "$(cat shasums-sig-upload.txt.txt)"
+          curl -T scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS.sig --url "$(cat shasums-sig-upload.txt)"
       - name: platform endpoint
         run : |
           awk '$2 == "scaffolding_${{ steps.vars.outputs.version }}_darwin_amd64.zip" { print $0 }' scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS | cut  -d ' ' -f1 > darwin_amd64_hash.txt
