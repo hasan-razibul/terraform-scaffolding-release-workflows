@@ -11,6 +11,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           repository: "hasan-razibul/scaffolding"
           type: "stable"
+      
       - name: echo release number   
         run : echo "${{ steps.nyx.outputs.release }}" | awk 'sub(/^.{1}/,"")' > version.txt
 
@@ -21,20 +22,19 @@ jobs:
       - name: echo version
         run : echo ${{ steps.vars.outputs.version }}
         
-        
-        
-        
       - name: Checkout
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
         
+      
       - name: Update payload.json version
         uses: chromee/dot-json-edit-action@v1
         with:
           json_path: ".github/workflows/payload.json"
           field_path: "data/attributes/version"
           field_value: "${{ steps.vars.outputs.version }}"
+      
       - name: after edit
         run: cat .github/workflows/payload.json
         
@@ -65,6 +65,7 @@ jobs:
         run : |
           jq -r .data.links'."shasums-upload"' provider_version_endpoint.json > shasums-upload.txt
           jq -r .data.links'."shasums-sig-upload"' provider_version_endpoint.json > shasums-sig-upload.txt
+      
       - name: show upload links
         run: |
           cat shasums-upload.txt
@@ -84,19 +85,25 @@ jobs:
         run : |
           curl -T scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS --url "$(cat shasums-upload.txt)"
           curl -T scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS.sig --url "$(cat shasums-sig-upload.txt)"
-      - name: platform endpoint
+      
+      
+      
+      
+      #upload binary files for darwin_amd64
+
+      - name: platform endpoint for darwin_amd64
         run : |
           awk '$2 == "scaffolding_${{ steps.vars.outputs.version }}_darwin_amd64.zip" { print $0 }' scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS | cut  -d ' ' -f1 > darwin_amd64_hash.txt
           cat darwin_amd64_hash.txt
           awk '$2 == "scaffolding_${{ steps.vars.outputs.version }}_darwin_amd64.zip" { print $0 }' scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS | cut  -d ' ' -f3 > darwin_amd64_name.txt
           cat darwin_amd64_name.txt
           
-      - name: set output hash
-        id: get_hash
+      - name: set output hash darwin_amd64
+        id: get_hash_darwin_amd64
         run: echo "hash=$(cat darwin_amd64_hash.txt)" >> $GITHUB_OUTPUT
         
-      - name: set output name
-        id: get_name
+      - name: set output name darwin_amd64
+        id: get_name_darwin_amd64
         run: echo "name=$(cat darwin_amd64_name.txt)" >> $GITHUB_OUTPUT
           
       - name: get platform
@@ -111,24 +118,73 @@ jobs:
                         "attributes": {
                           "os": "darwin",
                           "arch": "amd64",
-                          "shasum": "${{ steps.get_hash.outputs.hash }}",
-                          "filename": "${{ steps.get_name.outputs.name }}"
+                          "shasum": "${{ steps.get_hash_darwin_amd64.outputs.hash }}",
+                          "filename": "${{ steps.get_name_darwin_amd64.outputs.name }}"
                         }
                       }
                     }' \
-            https://app.terraform.io/api/v2/organizations/Test-nyx/registry-providers/private/Test-nyx/nyxx/versions/${{ steps.vars.outputs.version }}/platforms > platform.json
+            https://app.terraform.io/api/v2/organizations/Test-nyx/registry-providers/private/Test-nyx/nyxx/versions/${{ steps.vars.outputs.version }}/platforms > platform_darwin_amd64.json
       
       - name: show platform json file
-        run: cat platform.json
+        run: cat platform_darwin_amd64.json
         
       - name: extract binary upload link
-        run: jq -r .data.links'."provider-binary-upload"' platform.json > binary_upload.txt
+        run: jq -r .data.links'."provider-binary-upload"' platform_darwin_amd64.json > binary_upload_darwin_amd64.txt
         
       - name : show binary txt
-        run : cat binary_upload.txt
+        run : cat binary_upload_darwin_amd64.txt
         
       - name : upload binary
-        run : curl -T ${{ steps.get_name.outputs.name }} --url "$(cat binary_upload.txt)"
+        run : curl -T ${{ steps.get_name_darwin_amd64.outputs.name }} --url "$(cat binary_upload_darwin_amd64.txt)"
+
+
+      #upload binary files for linux_amd64
+
+      - name: platform endpoint for linux_amd64
+        run : |
+          awk '$2 == "scaffolding_${{ steps.vars.outputs.version }}_linux_amd64.zip" { print $0 }' scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS | cut  -d ' ' -f1 > linux_amd64_hash.txt
+          cat linux_amd64_hash.txt
+          awk '$2 == "scaffolding_${{ steps.vars.outputs.version }}_linux_amd64.zip" { print $0 }' scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS | cut  -d ' ' -f3 > linux_amd64_name.txt
+          cat linux_amd64_name.txt
+          
+      - name: set output hash linux_amd64
+        id: get_hash_linux_amd64
+        run: echo "hash=$(cat linux_amd64_hash.txt)" >> $GITHUB_OUTPUT
+        
+      - name: set output name linux_amd64
+        id: get_name_linux_amd64
+        run: echo "name=$(cat linux_amd64_name.txt)" >> $GITHUB_OUTPUT
+          
+      - name: get platform
+        run : |
+          curl \
+            --header "Authorization: Bearer ${{ secrets.TOKEN }}" \
+            --header "Content-Type: application/vnd.api+json" \
+            --request POST \
+            --data '{
+                      "data": {
+                        "type": "registry-provider-version-platforms",
+                        "attributes": {
+                          "os": "darwin",
+                          "arch": "amd64",
+                          "shasum": "${{ steps.get_hash_linux_amd64.outputs.hash }}",
+                          "filename": "${{ steps.get_name_linux_amd64.outputs.name }}"
+                        }
+                      }
+                    }' \
+            https://app.terraform.io/api/v2/organizations/Test-nyx/registry-providers/private/Test-nyx/nyxx/versions/${{ steps.vars.outputs.version }}/platforms > platform_linux_amd64.json
+      
+      - name: show platform json file
+        run: cat platform_linux_amd64.json
+        
+      - name: extract binary upload link
+        run: jq -r .data.links'."provider-binary-upload"' platform_linux_amd64.json > binary_upload_linux_amd64.txt
+        
+      - name : show binary txt
+        run : cat binary_upload_linux_amd64.txt
+        
+      - name : upload binary
+        run : curl -T ${{ steps.get_name_linux_amd64.outputs.name }} --url "$(cat binary_upload_linux_amd64.txt)"
 
           
           
