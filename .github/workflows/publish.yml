@@ -1,4 +1,4 @@
-name: sha256sums upload link
+name: Publish
 on: workflow_dispatch
 jobs:
   get:
