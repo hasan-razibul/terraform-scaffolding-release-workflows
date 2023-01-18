@@ -69,6 +69,17 @@ jobs:
         run: |
           cat shasums-upload.txt
           cat shasums-sig-upload.txt
+      
+      - uses: robinraju/release-downloader@v1.7
+        with:
+          latest: true
+          fileName: "*"
+      - run: |
+          ls ${{ github.workspace }}
+      
+      - name : open sha256sums
+        run: cat scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS      
+
      
 
  
