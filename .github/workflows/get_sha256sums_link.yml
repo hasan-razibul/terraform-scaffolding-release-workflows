@@ -58,7 +58,7 @@ jobs:
                       }
                     }' \
             https://app.terraform.io/api/v2/organizations/Test-nyx/registry-providers/private/Test-nyx/nyxx/versions > provider_version_endpoint.json
-      - name: show provider_version_endpoint   
+      - name: show provider_version_endpoint file   
         run: cat provider_version_endpoint.json
         
       - name: extract shasums-upload link
@@ -80,10 +80,57 @@ jobs:
       - name : open sha256sums
         run: cat scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS
         
-      - name: upload sha256sums file
+      - name: upload sha256sums files
         run : |
           curl -T scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS | cat shasums-upload.txt
           curl -T scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS.sig | cat shasums-sig-upload.txt
+      - name: platform endpoint
+        run : |
+          awk '$2 == "scaffolding_${{ steps.vars.outputs.version }}_darwin_amd64.zip" { print $0 }' scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS | cut  -d ' ' -f1 > darwin_amd64_hash.txt
+          cat darwin_amd64_hash.txt
+          awk '$2 == "scaffolding_${{ steps.vars.outputs.version }}_darwin_amd64.zip" { print $0 }' scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS | cut  -d ' ' -f3 > darwin_amd64_name.txt
+          cat darwin_amd64_name.txt
+          
+      - name: set output hash
+        id: get_hash
+        run: echo "hash=$(cat darwin_amd64_hash.txt)" >> $GITHUB_OUTPUT
+        
+      - name: set output name
+        id: get_name
+        run: echo "name=$(cat darwin_amd64_name.txt)" >> $GITHUB_OUTPUT
+          
+      - name: get platform
+        run : |
+          curl \
+            --header "Authorization: Bearer $TOKEN" \
+            --header "Content-Type: application/vnd.api+json" \
+            --request POST \
+            --data '{
+                      "data": {
+                        "type": "registry-provider-version-platforms",
+                        "attributes": {
+                          "os": "darwin",
+                          "arch": "amd64",
+                          "shasum": "${{ steps.get_hash.outputs.hash }}",
+                          "filename": "${{ steps.get_name.outputs.name }}"
+                        }
+                      }
+                    }' \
+            https://app.terraform.io/api/v2/organizations/Test-nyx/registry-providers/private/Test-nyx/nyxx/versions/${{ steps.vars.outputs.version }}/platforms > platform.json
+      
+      - name: show platform json file
+        run: cat platform.json
+        
+      - name: extract binary upload link
+        run: jq -r .data.links'."provider-binary-upload"' platform.json > binary_upload.txt
+        
+      - name : show binary txt
+        run : cat binary_upload.txt
+        
+      - name : upload binary
+        run : curl -T ${{ steps.get_name.outputs.name }} | cat binary_upload.txt
+
+          
           
 
      
