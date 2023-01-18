@@ -57,9 +57,19 @@ jobs:
                         }
                       }
                     }' \
-            https://app.terraform.io/api/v2/organizations/Test-nyx/registry-providers/private/Test-nyx/nyxx/versions > sha256sums.txt
-      - name: show sha256sums txt  
-        run: cat sha256sums.txt
+            https://app.terraform.io/api/v2/organizations/Test-nyx/registry-providers/private/Test-nyx/nyxx/versions > provider_version_endpoint.json
+      - name: show provider_version_endpoint   
+        run: cat provider_version_endpoint.json
+        
+      - name: extract shasums-upload link
+        run : |
+          jq -r .data.links'."shasums-upload"' provider_version_endpoint.json > shasums-upload.txt
+          jq -r .data.links'."shasums-sig-upload"' provider_version_endpoint.json > shasums-sig-upload.txt
+      - name: show upload links
+        run: |
+          cat shasums-upload.txt
+          cat shasums-sig-upload.txt
+     
 
  
  
