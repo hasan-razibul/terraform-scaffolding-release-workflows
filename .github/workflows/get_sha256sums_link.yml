@@ -78,7 +78,13 @@ jobs:
           ls ${{ github.workspace }}
       
       - name : open sha256sums
-        run: cat scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS      
+        run: cat scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS
+        
+      - name: upload sha256sums file
+        run : |
+          curl -T scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS | cat shasums-upload.txt
+          curl -T scaffolding_${{ steps.vars.outputs.version }}_SHA256SUMS.sig | cat shasums-sig-upload.txt
+          
 
      
 
