@@ -1,5 +1,7 @@
 name: Publish
-on: workflow_dispatch
+on:
+  release:
+    types: [published]
 jobs:
   get:
     runs-on: ubuntu-latest
