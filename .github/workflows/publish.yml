@@ -27,19 +27,9 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
         
-      
-      - name: Update payload.json version
-        uses: chromee/dot-json-edit-action@v1
-        with:
-          json_path: ".github/workflows/payload.json"
-          field_path: "data/attributes/version"
-          field_value: "${{ steps.vars.outputs.version }}"
-      
-      - name: after edit
-        run: cat .github/workflows/payload.json
         
           
-      - name: Curl-1
+      - name: Create provider version endpoint
         run: |
           curl \
             --header "Authorization: Bearer ${{ secrets.TOKEN }}" \
@@ -58,6 +48,7 @@ jobs:
                       }
                     }' \
             https://app.terraform.io/api/v2/organizations/Test-nyx/registry-providers/private/Test-nyx/nyxx/versions > provider_version_endpoint.json
+      
       - name: show provider_version_endpoint file   
         run: cat provider_version_endpoint.json
         
@@ -165,7 +156,7 @@ jobs:
                       "data": {
                         "type": "registry-provider-version-platforms",
                         "attributes": {
-                          "os": "darwin",
+                          "os": "linux",
                           "arch": "amd64",
                           "shasum": "${{ steps.get_hash_linux_amd64.outputs.hash }}",
                           "filename": "${{ steps.get_name_linux_amd64.outputs.name }}"
